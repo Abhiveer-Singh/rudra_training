@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 
@@ -19,11 +20,43 @@ int addNumbers(string expression) {
     return sum;
 }
 
+int subtractNumbers(string expression) {
+    int difference = 0;
+    int num = 0;
+    bool firstNumber = true;
+
+    for (char c : expression) {
+        if (c == '-') {
+            if (firstNumber) {
+                difference = num;
+                firstNumber = false;
+            } else {
+                difference -= num;
+            }
+            num = 0;
+        } else {
+            num = num * 10 + (c - '0');
+        }
+    }
+
+    if (firstNumber) {
+        difference = num;
+    } else {
+        difference -= num;
+    }
+
+    return difference;
+}
+
 int main() {
     string expression;
     cin >> expression;
 
-    cout << addNumbers(expression) << endl;
+    if (expression.find('-') != string::npos) {
+        cout << subtractNumbers(expression) << endl;
+    } else {
+        cout << addNumbers(expression) << endl;
+    }
 
     return 0;
 }
